@@ -18,18 +18,12 @@ class QchemCalculation(JobCalculation):
         super(QchemCalculation, self)._init_internal_params()
 
         # Name of the default output parser
-        #Here put the parser once it has been done
         self._default_parser = 'qchem.QchemBaseParser'
-#        self._default_parser = 'qchem.QchemBaseParser'
 
         # Default input and output files
         self._DEFAULT_INPUT_FILE  = 'aiida.in'
         self._DEFAULT_OUTPUT_FILE = 'aiida.out'
-#        self._DEFAULT_ERROR_FILE  = 'aiida.err'
-
-        # Default command line parameters
-#        self._default_commandline_params = ["-nt " , "-np " , self._DEFAULT_INPUT_FILE ]
-#        self._default_commandline_params = [ self._absolute_in  ] 
+        self._DEFAULT_ERROR_FILE  = 'aiida.err'
 
     @classproperty
     def _use_methods(cls):
@@ -139,14 +133,15 @@ class QchemCalculation(JobCalculation):
         calcinfo.uuid = self.uuid
         calcinfo.local_copy_list = []
         calcinfo.remote_copy_list = []
-        calcinfo.retrieve_list = [self._DEFAULT_OUTPUT_FILE]
+        calcinfo.retrieve_list = [self._DEFAULT_OUTPUT_FILE,
+                                  self._DEFAULT_ERROR_FILE]
         calcinfo.retrieve_singlefile_list = []
 
         codeinfo = CodeInfo()
         codeinfo.cmdline_params = commandline_params
         codeinfo.stdin_name = self._DEFAULT_INPUT_FILE
         codeinfo.stdout_name = self._DEFAULT_OUTPUT_FILE
-#        codeinfo.stderr_name = self._DEFAULT_ERROR_FILE
+        codeinfo.stderr_name = self._DEFAULT_ERROR_FILE
         codeinfo.code_uuid = code.uuid
         calcinfo.codes_info = [codeinfo]
 
