@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from aiida.parsers.plugins.qchem import QchemBaseParser
 from aiida.orm.calculation.job.qchem import QchemCalculation
 from aiida.orm.data.parameter import ParameterData
+from aiida.parsers.parser import Parser
 
 
-class BasicQchemParser(QchemBaseParser):
+class BasicQchemParser():
     """
     Parse the output of Qchem.
     """
@@ -13,8 +13,9 @@ class BasicQchemParser(QchemBaseParser):
         Initialize the instance of BasicQchemParser
         """
         # check for valid input
-        self._check_calc_compatibility(calc)
-        super(BasicQchemParser, self).__init__(calc)
+#       self._check_calc_compatibility(calc)
+#       super(BasicQchemParser, self).__init__(calc)
+        self._get_output_nodes(output_path, error_path)
 
     def _check_calc_compatibility(self,calc):
         from aiida.common.exceptions import ParsingError
@@ -29,7 +30,7 @@ class BasicQchemParser(QchemBaseParser):
         from aiida.orm.data.array.trajectory import TrajectoryData
         import re
 
-        state = 'qchem-scf-module'
+        state= 'qchem-scf-module'
         step = None
         scale = None
         with open(output_path) as f:
