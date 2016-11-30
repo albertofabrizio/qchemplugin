@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
-from aiida.parsers.plugins.nwchem import BasenwcParser
-from aiida.orm.calculation.job.nwchem.basic import BasicCalculation
+from aiida.parsers.plugins.qchem import QchemBaseParser
+from aiida.orm.calculation.job.qchem.qchem import QchemCalculation
 from aiida.orm.data.parameter import ParameterData
 
-__copyright__ = u"Copyright (c), This file is part of the AiiDA platform. For further information please visit http://www.aiida.net/. All rights reserved."
-__license__ = "MIT license, see LICENSE.txt file."
-__version__ = "0.7.0"
-__authors__ = "The AiiDA team."
-
-class BasicParser(BasenwcParser):
+class BasicQchemParser(QchemBaseParser):
     """
     Parser for the output of nwchem.
     """
@@ -18,12 +13,12 @@ class BasicParser(BasenwcParser):
         """
         # check for valid input
         self._check_calc_compatibility(calc)
-        super(BasicParser, self).__init__(calc)
+        super(BasicQchemParser, self).__init__(calc)
 
     def _check_calc_compatibility(self,calc):
         from aiida.common.exceptions import ParsingError
-        if not isinstance(calc,BasicCalculation):
-            raise ParsingError("Input calc must be a BasicCalculation")
+        if not isinstance(calc,QchemCalculation):
+            raise ParsingError("Input calc must be a QchemCalculation")
 
     def _get_output_nodes(self, output_path, error_path):
         """
