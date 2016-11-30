@@ -19,7 +19,7 @@ class QchemCalculation(JobCalculation):
 
         # Name of the default output parser
         #Here put the parser once it has been done
-        self._default_parser = 'qchem.QchemBasicParser'
+        self._default_parser = 'qchem.QchemBaseParser'
 #        self._default_parser = 'qchem.QchemBaseParser'
 
         # Default input and output files
