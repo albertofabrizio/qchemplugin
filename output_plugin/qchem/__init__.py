@@ -43,12 +43,6 @@ class QchemBaseParser(Parser):
         from aiida.common.exceptions import InvalidOperation
         import os
 
-        # check in order not to overwrite anything
-        state = self._calc.get_state()
-        if state != calc_states.PARSING:
-            raise InvalidOperation("Calculation not in {} state"
-                                   .format(calc_states.PARSING) )
-
         # Check that the retrieved folder is there
         try:
             out_folder = retrieved[self._calc._get_linkname_retrieved()]
@@ -80,9 +74,21 @@ class QchemBaseParser(Parser):
 
         result_dict = dict()
         trajectory = None
+        icounter=0
+        result_dict['HOMO (alpha/beta)']=[]
+        result_dict['LUMO (alpha/beta)']=[]
         for line in lines:
+            icounter += 1
             if ('Total energy in the final basis set' in line):
                 result_dict['energy']=line.split()[8]
                 continue
+            if ('Dipole Moment (Debye)' in line):
+                result_dict['dipole moment']=''.join(lines[icounter])
+                continue
+            if ('-- Virtual --' in line):
+                result_dict['HOMO (alpha/beta)'].append(''.join(lines[icounter-3]).split()[-1])
+                result_dict['LUMO (alpha/beta)'].append(''.join(lines[icounter]).split()[0])
+                continue
+
 
         return [('parameters', ParameterData(dict=result_dict))]

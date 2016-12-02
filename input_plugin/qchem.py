@@ -80,7 +80,7 @@ class QchemCalculation(JobCalculation):
         if dft_d == 'EMPIRICAL_GRIMME3':
             s6=par.pop('DFT_D3_S6','1000')
             s8=par.pop('DFT_D3_S8','1000')
-            sr6=par.pop('DFT_D3_SR6','1000')
+            sr6=par.pop('DFT_D3_RS6','1000')
         static=par.pop('MEM_STATIC', '240')
         total=par.pop('MEM_TOTAL', '2000')
         method=par.pop('METHOD', 'HF')
@@ -110,7 +110,7 @@ class QchemCalculation(JobCalculation):
             if dft_d == 'EMPIRICAL_GRIMME3':
                 f.write(' DFT_D3_S6 = {}\n'.format(s6))
                 f.write(' DFT_D3_S8 = {}\n'.format(s8))
-                f.write(' DFT_D3_SR6 = {}\n'.format(sr6))
+                f.write(' DFT_D3_RS6 = {}\n'.format(sr6))
             f.write(' MEM_STATIC = {}\n'.format(static))
             f.write(' MEM_TOTAL = {}\n'.format(total))
             f.write(' METHOD = {}\n'.format(method))
